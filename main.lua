@@ -274,7 +274,7 @@ local function paint(widget)
 
         -- paint background
         lcd.color(widget:getStateBgColor())
-        lcd.drawFilledRectangle(0, 0, widget.width, widget.height)
+        lcd.drawFilledRectangle(wPaint.TRANSPARENCY_X_OFFSET, wPaint.TRANSPARENCY_Y_OFFSET, widget.width - (2 * wPaint.TRANSPARENCY_X_OFFSET), widget.height - (2 * wPaint.TRANSPARENCY_Y_OFFSET))
 
         -- paint title (must be before paint state text or debug information)
         paintTitle()
@@ -295,7 +295,7 @@ local function paint(widget)
     local function paintSourceMissed()
         local debug = wHelper.Debug:new(widget.no, "paintSourceMissed"):info()
         lcd.color(COLOR_BLACK)
-        lcd.drawFilledRectangle(0, 0, widget.width, widget.height)
+        lcd.drawFilledRectangle(wPaint.TRANSPARENCY_X_OFFSET, wPaint.TRANSPARENCY_Y_OFFSET, widget.width - (2 * wPaint.TRANSPARENCY_X_OFFSET), widget.height - (2 * wPaint.TRANSPARENCY_Y_OFFSET))
 
         --- paint title
         paintTitle()

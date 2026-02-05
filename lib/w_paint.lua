@@ -37,6 +37,9 @@ local wPaint = {
     LINE_CENTERED = 2, -- align middle (vertical centered)
     LINE_BOTTOM   = 3, -- align bottom
 
+    -- Transparency Box offset (to show that widget has the Focus)
+    TRANSPARENCY_X_OFFSET = 1, -- left and right offset
+    TRANSPARENCY_Y_OFFSET = 1, -- top and bottom offset
 }                      -- library structure
 
 --  required libraries
@@ -77,16 +80,16 @@ function wPaint.text(text, fontSize, horizontalAlign, verticalAlign, shiftLine)
     _, textHeight = lcd.getTextSize("")
 
     if verticalAlign == wPaint.LINE_TOP then        -- align top
-        textPosY = wPaint.FREE_ABOVE + wPaint.titleHeight
+        textPosY = wPaint.TRANSPARENCY_Y_OFFSET + wPaint.FREE_ABOVE + wPaint.titleHeight
     elseif verticalAlign == wPaint.LINE_BOTTOM then -- align bottom
-        textPosY = (widget.height - textHeight - wPaint.footerHeight - wPaint.FREE_BELOW)
+        textPosY = (widget.height - textHeight - wPaint.footerHeight - wPaint.FREE_BELOW - wPaint.TRANSPARENCY_Y_OFFSET)
     else                                            -- align centered (default)
         -- textPosY = wPaint.FREE_ABOVE +
         --     ((widget.height - wPaint.titleHeight - wPaint.FREE_ABOVE - wPaint.footerHeight - wPaint.FREE_BELOW) / 2 - textHeight / 2) +
         --     wPaint.titleHeight
 
-        local boxTop = wPaint.titleHeight + wPaint.FREE_ABOVE
-        local boxHeight = widget.height - wPaint.FREE_BELOW - wPaint.footerHeight - boxTop
+        local boxTop = wPaint.titleHeight + wPaint.FREE_ABOVE + wPaint.TRANSPARENCY_Y_OFFSET
+        local boxHeight = widget.height - wPaint.FREE_BELOW - wPaint.footerHeight - wPaint.TRANSPARENCY_Y_OFFSET - boxTop
         local boxMiddle = boxTop + boxHeight / 2
         textPosY = boxMiddle - textHeight / 2
     end
@@ -94,9 +97,9 @@ function wPaint.text(text, fontSize, horizontalAlign, verticalAlign, shiftLine)
     textPosY = textPosY + (shiftLine * textHeight) -- shift line
 
     if horizontalAlign == TEXT_LEFT then
-        lcd.drawText(wPaint.FREE_LEFT, textPosY, text, TEXT_LEFT)
+        lcd.drawText(wPaint.FREE_LEFT + wPaint.TRANSPARENCY_X_OFFSET, textPosY, text, TEXT_LEFT)
     elseif horizontalAlign == TEXT_RIGHT then
-        lcd.drawText(widget.width - wPaint.FREE_RIGHT, textPosY, text, TEXT_RIGHT)
+        lcd.drawText(widget.width - wPaint.FREE_RIGHT - wPaint.TRANSPARENCY_X_OFFSET, textPosY, text, TEXT_RIGHT)
     else
         lcd.drawText((widget.width / 2), textPosY, text, TEXT_CENTERED)
     end
@@ -116,7 +119,7 @@ function wPaint.title(titleText, titleBGColor, titleTxColor)
     titleHeight = wPaint.FREE_ABOVE + titleHeight + wPaint.FREE_BELOW
 
     lcd.color(titleBGColor)
-    lcd.drawFilledRectangle(0, 0, widget.width, titleHeight)
+    lcd.drawFilledRectangle(wPaint.TRANSPARENCY_X_OFFSET, wPaint.TRANSPARENCY_Y_OFFSET, widget.width - (2 * wPaint.TRANSPARENCY_X_OFFSET), titleHeight - wPaint.TRANSPARENCY_Y_OFFSET)
 
     --- draw title text
     lcd.color(titleTxColor)
@@ -141,7 +144,7 @@ function wPaint.footer(footerText, footerBGColor, footerTxColor)
     if footerBGColor ~= nil then
         footerHeight = wPaint.FREE_ABOVE + footerHeight
         lcd.color(footerBGColor)
-        lcd.drawFilledRectangle(0, widget.height - footerHeight, widget.width, widget.height)
+        lcd.drawFilledRectangle(wPaint.TRANSPARENCY_X_OFFSET, widget.height - footerHeight - (2 * wPaint.TRANSPARENCY_Y_OFFSET), widget.width - (2 * wPaint.TRANSPARENCY_X_OFFSET), widget.height - (2 * wPaint.TRANSPARENCY_Y_OFFSET))
     end
     --- draw footer text
     lcd.color(footerTxColor)
