@@ -367,8 +367,8 @@ local function configure(widget)
         wConfig.addNumberField("thresholdDown", widget.source:minimum(), widget.source:maximum(), THRESHOLD_PRECISION)
         wConfig.addNumberField("thresholdUp", widget.source:minimum(), widget.source:maximum(), THRESHOLD_PRECISION)
     else
-        wConfig.addNumberField("thresholdUp", -THRESHOLD_RANGE, THRESHOLD_RANGE, THRESHOLD_PRECISION)
         wConfig.addNumberField("thresholdDown", -THRESHOLD_RANGE, THRESHOLD_RANGE, THRESHOLD_PRECISION)
+        wConfig.addNumberField("thresholdUp", -THRESHOLD_RANGE, THRESHOLD_RANGE, THRESHOLD_PRECISION)
     end
 
     -- Font size
