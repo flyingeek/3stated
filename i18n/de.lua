@@ -5,6 +5,7 @@ return {
   FontSizeIndex = "Schriftgröße",
   Source = "Quelle",
   SourceMissed = "keine Quelle",
+  SourceReset = "%s zurücksetzen",
   BackgroundColor = "Hintergrundfarbe",
   StateDown = "Unten",
   StateMiddle = "Mitte",

@@ -507,6 +507,24 @@ local function read(widget)
     wStorage.read("debugMode")
 end
 
+local function menu(widget)
+    local CATEGORY_LUA = 29
+    if wHelper.existSource(widget.source) and widget.source.reset then
+        local category = widget.source:category()
+        if
+            category == CATEGORY_TIMER or
+            category == CATEGORY_TELEMETRY_SENSOR or
+            category == CATEGORY_LUA
+        then
+            return {
+                {string.format(STR("SourceReset"), widget.source:name()),
+                function()
+                widget.source:reset()
+                end},
+            }
+        end
+    end
+end
 ------------------------------------------------------------------------------------------------------------------------
 --- Initialize the widget (register it in the system).
 local function init()
@@ -520,6 +538,7 @@ local function init()
         configure = configure,
         read = read,
         write = write,
+        menu=menu,
         title = false
     })
 end

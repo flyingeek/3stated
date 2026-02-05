@@ -5,6 +5,7 @@ return {
   FontSizeIndex = "Velikost písma",
   Source = "Zdroj",
   SourceMissed = "žádný zdroj",
+  SourceReset = "%s Reset",
   BackgroundColor = "Barva pozadí",
   StateDown = "Dole",
   StateMiddle = "Střed",
