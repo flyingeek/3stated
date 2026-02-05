@@ -524,6 +524,7 @@ local function menu(widget)
             }
         end
     end
+    return {}
 end
 ------------------------------------------------------------------------------------------------------------------------
 --- Initialize the widget (register it in the system).
