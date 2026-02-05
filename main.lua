@@ -360,8 +360,16 @@ local function configure(widget)
     wConfig.addSourceField("source")
 
     -- thresholds
-    wConfig.addNumberField("thresholdDown", -THRESHOLD_RANGE, THRESHOLD_RANGE, THRESHOLD_PRECISION)
-    wConfig.addNumberField("thresholdUp", -THRESHOLD_RANGE, THRESHOLD_RANGE, THRESHOLD_PRECISION)
+    if wHelper.existSource(widget.source) and widget.source.maximum and widget.source.minimum then
+        -- Not perfect since to have this code working you will need
+        -- to configure the widget to set the source first
+        -- and then to configure again to set the remaining parameters
+        wConfig.addNumberField("thresholdDown", widget.source:minimum(), widget.source:maximum(), THRESHOLD_PRECISION)
+        wConfig.addNumberField("thresholdUp", widget.source:minimum(), widget.source:maximum(), THRESHOLD_PRECISION)
+    else
+        wConfig.addNumberField("thresholdUp", -THRESHOLD_RANGE, THRESHOLD_RANGE, THRESHOLD_PRECISION)
+        wConfig.addNumberField("thresholdDown", -THRESHOLD_RANGE, THRESHOLD_RANGE, THRESHOLD_PRECISION)
+    end
 
     -- Font size
     wConfig.addChoiceField("fontSizeIndex", FONT_SIZE_SELECTION)
